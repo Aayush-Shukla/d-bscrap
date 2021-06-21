@@ -1,5 +1,6 @@
 import os
 import scrapy
+import json
 path = os.getcwd()
 # par_path = os.path.abspath(os.path.join(path, os.pardir))
 
@@ -7,17 +8,26 @@ class Dnbv2spider(scrapy.Spider):
     name = "data"
 
     def start_requests(self):
-        file = getattr(self, 'file', None)+".txt"
+        file = getattr(self, 'file', None)+".json"
         
 
-        urls = [
-        ]
+        # urls = ["https://www.dnb.com/business-directory/company-profiles.adani_green_energy_limited.9ddf6abeffc5b426d53cd0aaf76e919d.html",
+        # "https://www.dnb.com/business-directory/company-profiles.adani_green_energy_limited.9ddf6abeffc5b426d53cd0aaf76e919d.html"
+        # ]
         # print(par_path)
-        with open(os.path.join(path,"dnbv2","temp",file),'r', encoding='utf-8') as my_file:
-            for line in my_file:
-                urls.append(line)
-        for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse)
+        with open(os.path.join(path,"dnbv2","temp",file),'r') as f:
+            data = json.load(f)
+            for company in data:
+                for url in company['links']:
+                    print(company["name"],url,"============================================================")
+                    
+                    yield scrapy.Request(url=url,dont_filter=True, callback=self.parse, meta={"args":company,"url":url})
+                # urls.append(line)
+
+        
+        # for url in urls:
+        #     print("-------------------------------------===========================================22222222")
+        #     yield scrapy.Request(url=url,dont_filter=True, callback=self.parse)
 
     def parse(self, response):
         print(response,"-------------------")
@@ -33,15 +43,20 @@ class Dnbv2spider(scrapy.Spider):
         print(response.xpath('//div[@name="parent"]/div[1]/a/text()').get())
 
         yield{
+            "excel_name":response.meta.get("args")['name'],
+            "excel_country":response.meta.get("args")['country'],
             "name":response.xpath('//h2[@class="profile_header_title"]/text()').get(),
-            "website":response.xpath('//a[@id="hero-company-link"]/@href').get(),
             "country":response.xpath('//span[@class="company_country"]/text()').get(),
-            "summary":response.xpath('//span[@class="company_summary"]/text()').get(),
-            "employeeCount":response.xpath('//li[@class="empCon"]/span[2]/text()').get(),
+            "dnb_url":response.meta.get("url"),
+            "website":response.xpath('//a[@id="hero-company-link"]/@href').get(),
+            "parent":response.xpath('//div[@name="parent"]/div[1]/a/text()').get(),
+            
             "yearStarted":response.xpath('//li[@class="year_started"]/span[2]/text()').get(),
             "yearIncorporated":response.xpath('//li[@class="founded"]/span[2]/text()').get(),
+            "employeeCount":response.xpath('//li[@class="empCon"]/span[2]/text()').get(),
             "industry":response.xpath('//span[@class="profile-industry-item"]/text() | //span[@class="profile-industry-item"]/a/text()').getall(),
-            "parent":response.xpath('//div[@name="parent"]/div[1]/a/text()').get()
+            
+            "summary":response.xpath('//span[@class="company_summary"]/text()').get()
 
 
         }

@@ -17,6 +17,8 @@ DOWNLOADER_CLIENT_TLS_METHOD = "TLSv1.2"
 USER_AGENT ='PostmanRuntime/7.26.8'
 
 HTTPERROR_ALLOWED_CODES  =[403]
+# DUPEFILTER_CLASS = 'scrapy.dupefilters.BaseDupeFilter'
+# DUPEFILTER_CLASS = True
 
 # USER_AGENT = 'quotesbot (+http://www.yourdomain.com)'
 # USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36"
