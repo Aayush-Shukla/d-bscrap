@@ -17,7 +17,7 @@ import urllib
 
 random_string=str(time.time()).split(".")[0]
 links_json = []
-input_file="input.txt"
+# input_file="input.txt"
 cur_path = os.path.dirname(__file__)
 # query_list=['administrative services trier de mexico s a de c v','aees inc','aees manufactuera s de r l de c v']
 # query_list=['harita arc private limited','harita collection services private limited','pt tvs motor company indonesia jakarta','pt tvs motor company indonesia','sundaram auto components limited chennai','sundaram auto components limited','sundaram business development consulting shanghai co limited shanghai','sundaram business development consulting shanghai co limited','sundaram holding usa inc','tvs commodity financial solutions private limited','tvs credit services limited','tvs housing finance private limited','tvs housing limited','tvs micro finance private limited','tvs motor company europe b v amsterdam','tvs motor company europe b v','tvs motor services limited','tvs motor singapore pte limited singapore','tvs motor singapore pte limited','tvs two wheeler mall private limited'
@@ -29,22 +29,22 @@ for dirpath, dirnames, filenames in os.walk("input"):
 
 
 
-# sheetname=input("sheet name[default is first sheet]: ") or 0
-# first_row=int(input("first row :"))-1 
-# last_row=int(input("last row:"))-1 
+sheetname=input("sheet name[default is first sheet]: ") or 0
+first_row=int(input("first row :"))-1 
+last_row=int(input("last row:"))-1 
 
-# namecol=input("Name column: ") or 0
-# country_col=input("country column: ") or 1
+namecol=input("Name column: ") or 0
+country_col=input("country column: ") or 1
 
 
 # test
 
-sheetname= 0
-first_row=1
-last_row=50
+# sheetname= 0
+# first_row=1
+# last_row=50
 
-namecol='J'
-country_col='L'
+# namecol='J'
+# country_col='L'
 
 
 
@@ -135,21 +135,22 @@ for (idx,row) in df.iterrows():
     print("fetchin {} of {}".format(idx,len(df)))
     # print(row)
     links=[]
+    print(ua.random)
     
     conn = http.client.HTTPSConnection("www.dnb.com")
     payload = ''
     headers = {
-                'authority': 'www.dnb.com',
+  'authority': 'www.dnb.com',
   'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36',
   'accept': '*/*',
   'sec-gpc': '1',
   'sec-fetch-site': 'same-origin',
   'sec-fetch-mode': 'cors',
   'sec-fetch-dest': 'empty',
-  'referer': 'https://www.dnb.com/business-directory/top-results.html?term=marico&page=1',
+  'referer': 'https://www.dnb.com/business-directory/top-results.html?term=alphabet&page=1',
   'accept-language': 'en-US,en;q=0.9',
-  'cookie': 'chosen_visitorFrom_cookie_new=DIR; HID=1622213872486; drift_aid=fd01f143-56e2-4af3-80f1-37b95896ac7e; driftt_aid=fd01f143-56e2-4af3-80f1-37b95896ac7e; DMCP=1; _bcvm_vrid_2775810355515379163=648726101229444880T6742C0D0B425ECB757510091BC42867E6A799D64629757287E89CD272F8EA87346D5CF123FD01D3EC8FE1A02739C2F02578B2CF21FA53BC943315EC219E9C85D; SSLB=0; AMCVS_8E4767C25245B0B80A490D4C%40AdobeOrg=1; drift_campaign_refresh=5811a12a-c27a-426f-bb2c-6e479be1d4e5; AMCV_8E4767C25245B0B80A490D4C%40AdobeOrg=-1124106680%7CMCIDTS%7C18799%7CMCMID%7C75832162905368450318841924916097556759%7CMCOPTOUT-1624299187s%7CNONE%7CvVersion%7C5.2.0; AWSALB=/0ngSj1IM1BaTeF+tgjO038mwspJtScOteqDf+bUJGDwP94tzcaWJau/5Es2kYiTW7GheMgQ6IaDdp4AplXrsCgbgjZnwN+17tYZtSShpXC9LXhVC03j11pxoLS2; AWSALBCORS=/0ngSj1IM1BaTeF+tgjO038mwspJtScOteqDf+bUJGDwP94tzcaWJau/5Es2kYiTW7GheMgQ6IaDdp4AplXrsCgbgjZnwN+17tYZtSShpXC9LXhVC03j11pxoLS2; ak_bmsc=DB4D2CE3F6FFE64CDAD68DF6984C0B7E~000000000000000000000000000000~YAAQbI0sMcE16hd6AQAAx4ZsLwzvusqIGAyUDJA2FIEkB7+EPwcZVIwER1PdzLQA4ys6ObF3elr7ndsH7KRiiWrM+NM9LCidr0m5muIjUysCbQ8mTCS7z6kKrfsq/ye1i5kuL0qkf7XS8kZ/RSM+mcN46fhT1NWm/uCwpP12fZbvjcFRv8sjNw+EQvZGCDM/LSPnK6oex02Yy/bEyJ6bfbp/Ix6T5e0WaHMpLWLChggLru+sCiTWCExHzxPIHPjo7G/Bb/ob5YDBEKecxdpEHxrp4lSGK068oZnL1QStuYBuEB44Yn4SCH2pH+BtIGYhWQntLGwudL7DPy0Qu5SpTWs3bQpUJmQMZnz8jrSmztnnaUI5IvjD8IQajqY/7fhJxMtPGVi2jw==; SSLB=0; AWSALB=qTLyihsOTrS0BYFD1MuhfM3Pyw2FHF9cp1a+n4M31yVFKPCsF9g20ima0XsJaGFeSb9CNViQ84EvGP9AXhRljT9+Z5JxmUufgqBuvhttdrQEWLw9uW4DQXO6k2K9; AWSALBCORS=qTLyihsOTrS0BYFD1MuhfM3Pyw2FHF9cp1a+n4M31yVFKPCsF9g20ima0XsJaGFeSb9CNViQ84EvGP9AXhRljT9+Z5JxmUufgqBuvhttdrQEWLw9uW4DQXO6k2K9; bm_sv=3A7947F27987AB3BDFF67BB1E649668D~1uygBY7MgupR0SmFxX9VYngD3/eR+4kF5P1D5XxIJ0uhpxOrRtqDCGeD2Oi1Y/xd0w3Z3+hfp/2GfVG11FMOhPQtTBbmaN7yyNERyxt1GWzSMnkwL7vCoRuHbogFOpbtqysLl0ITPLj2cT1OrVOtKg=='
-  }
+  'cookie': 'chosen_visitorFrom_cookie_new=DIR; HID=1622213872486; drift_aid=fd01f143-56e2-4af3-80f1-37b95896ac7e; driftt_aid=fd01f143-56e2-4af3-80f1-37b95896ac7e; DMCP=1; _bcvm_vrid_2775810355515379163=648726101229444880T6742C0D0B425ECB757510091BC42867E6A799D64629757287E89CD272F8EA87346D5CF123FD01D3EC8FE1A02739C2F02578B2CF21FA53BC943315EC219E9C85D; SSLB=0; ak_bmsc=4C15E8204A7EAB6450D336418140EBBA~000000000000000000000000000000~YAAQJ40sMRUFTux5AQAA0Qq0MQxt5GVPbVe9ciBgcACJhOkOk03VPIUIVWG1s0wgc/BSib00i77yPl3oybravFJbSm22bdsr2/mrhTyZZfF8HE/9IDAMp2nfw+NfrlD5puAc1et4pXwCaifncrAj4q/IDHI3RZPiWQkCslw32iscAyHjygEkBJaRltuip8EzcQMZCPiyAkvX7rDS4D5mW/aHNFmXMfKCOeNtUqKYLUUnYQuXIZvIwdfrAF9501ZxpFBRzjSb9qTQjOquKUD3/a7C8YZtnRzJOqsNr6n8tHYoWfGdjGr/ORtFifhQv15BGCxJrSNt5xW44kg367xsweBgUScOBoHKZNUYVem/qV8g/PZj8Y21KWhm9CST0vxqGr6nx1/r; AMCVS_8E4767C25245B0B80A490D4C%40AdobeOrg=1; drift_campaign_refresh=50799ad7-6046-499d-b950-5fa218ded004; integrated_search_query=alphabet; bm_mi=189B9331BA57C51D28572BD60F56C38A~Tn7vEBZovI2Dd2hZD9TH0bmwDL9uBbZig7yCoiiH2rhY95Yow7GwzIH8q5KeqWFCIQok6Kp6l1AkAJt6HbN/o7eOIN2USvWSHxrnEkWRSms4EiosjAirwEyFu4TNbvZ/7rOMy2TfB644PotgLaC1+tN+/k44CjaTPLuZEd9f6IMG/Dx8K7A2zpQjyPy4Jwy2zhQ+P/MBJ2vPo4OPNN/v7zsN1p2zUytpW50hbQ9PTIVeI/oj0UvkboiaQCkyxUbgRii4DNxfZh/5xv4Ttbfd0g==; AWSALB=mU4et1H7GawHknCnOY8dBmsG8pgtHthzxOl5zjC6zTgVEUwQWgs31CNO0NdMYha44BsPfFotqb+Lo94XHtl2Q6iuga8gbMEtHtN8BeuZMFg7pLgsjgLgQC8Gp8OA; AWSALBCORS=mU4et1H7GawHknCnOY8dBmsG8pgtHthzxOl5zjC6zTgVEUwQWgs31CNO0NdMYha44BsPfFotqb+Lo94XHtl2Q6iuga8gbMEtHtN8BeuZMFg7pLgsjgLgQC8Gp8OA; bm_sv=E563E561D67B35391BEC8F8C4134EFFE~Xi6qfE/e00tTtqdx+e29SoVKZUCsSqFQ92Do4UkeGH4Ukafg0Rk4F6yMXNqEzwlDueOfR3A4whLmIr771fbGNgNiFmui23s2dmRj3HRRooHoDypzaUV/gBKMF7K6VI+7jgJK9+dnFq650ehqKiOHcg==; AMCV_8E4767C25245B0B80A490D4C%40AdobeOrg=-1124106680%7CMCIDTS%7C18801%7CMCMID%7C75832162905368450318841924916097556759%7CMCOPTOUT-1624338735s%7CNONE%7CvVersion%7C5.2.0; ak_bmsc=4C15E8204A7EAB6450D336418140EBBA~000000000000000000000000000000~YAAQJ40sMSMGTux5AQAAnhS7MQz2CDTJBR8ir1SDDWenDUvmScAB/f23z4aFH0bv4YsFWOZhhUcJwcT4UgTidKvlD1rrNTD4pYHsuq2uW3df2Rmsoh4Wcg5XiYQTAZngdqFRzVKfXIH1TKJao+UMgc42E0opkZ7ErrZtutmGWgpdgS/ioOd+1lj4Pwe43P8Vs0CNBuh0K0jiEPdfhLjvbT7qGnJ02JPDzrwaT09vXGlST+iktoERiYgbhTwLzOWM3mk38m2XK2w0fSNiaR2U0Vigd2aQW8Sp2sxEMNHn4I6gfU1Fje4Dgevfu+T16VJZP7CwmVX8esR8am15oapjer008PDlSjwnABduTjQ96R/KX76Trkv2TDB+GPTdbBP//m7BBx0PV/o=; AWSALB=2Y9NEMPDpqYp+vB5QacNwpOE0aphUpksDtwKkgciBEfbfnWAWmXyBYB1wGiecpJuCk/7o5fED7SmJy6v0nNG5OJXLME77Nm1AyeMKuQIFYmDnQBePuxw4BiQsk3J; AWSALBCORS=2Y9NEMPDpqYp+vB5QacNwpOE0aphUpksDtwKkgciBEfbfnWAWmXyBYB1wGiecpJuCk/7o5fED7SmJy6v0nNG5OJXLME77Nm1AyeMKuQIFYmDnQBePuxw4BiQsk3J; bm_sv=E563E561D67B35391BEC8F8C4134EFFE~Xi6qfE/e00tTtqdx+e29SoVKZUCsSqFQ92Do4UkeGH4Ukafg0Rk4F6yMXNqEzwlDueOfR3A4whLmIr771fbGNgNiFmui23s2dmRj3HRRooG0xhDud7TFzsfhczTmKYJHiDL4qVsgYJci25ypu5KDMg=='
+}
     conn.request("GET", "/apps/dnb/thirdparty/dnbdirectutil?limited=false&captchaDone=true&pageSize=5&pageNumber=1&criteriasearch=true&searchTerm={}".format(quote(row.loc["Name"])), payload, headers)
     res = conn.getresponse()
     data = res.read()
@@ -161,7 +162,11 @@ for (idx,row) in df.iterrows():
     # print(first_comp)
     base_link="https://www.dnb.com/business-directory/company-profiles."
     
-    link=base_link+first_comp["primaryNameForUrl"]+"."+first_comp["duns"]+".html"
+    try:
+
+        link=base_link+first_comp["primaryNameForUrl"]+"."+first_comp["duns"]+".html"
+    except: 
+        continue
     
     print(link)
     links.append(link)
@@ -271,11 +276,20 @@ data = json.load(f)
 
 df = pd.DataFrame.from_dict(data, orient='columns')
 df=df.dropna(thresh=7)
-# df=df.drop(df[df['excel_country'].str.lower()!=df['country'].str.lower()].index)
+clean_df=df.drop(df[df['excel_country'].str.lower()!=df['country'].str.lower()].index)
 
 print(df.info)
 # Closing file
-df.to_excel('output{}.xlsx'.format(random_string),index=False)
+
+
+with pd.ExcelWriter(os.path.join('output','output{}.xlsx'.format(random_string))) as writer:  
+    clean_df.to_excel(writer, sheet_name='filtered',index=False)
+    df.to_excel(writer, sheet_name='unfiltered',index=False)
+
+
+# clean_df.to_excel('output{}.xlsx'.format(random_string),index=False,sheet_name='filtered')
+# df.to_excel('output{}.xlsx'.format(random_string),index=False,sheet_name='unfiltered')
+
 f.close()
 
 
