@@ -132,10 +132,10 @@ print(sheetname,first_row,last_row,namecol,country_col)
 
 
 for (idx,row) in df.iterrows():
-    print("fetchin {} of {}".format(idx,len(df)))
+    print("fetchin \"{}\" of {}".format(row.loc["Name"],len(df)))
     # print(row)
     links=[]
-    print(ua.random)
+    # print(ua.random)
     
     conn = http.client.HTTPSConnection("www.dnb.com")
     payload = ''
@@ -168,7 +168,7 @@ for (idx,row) in df.iterrows():
     except: 
         continue
     
-    print(link)
+    print(link,"\n")
     links.append(link)
     time.sleep(random() * 2)
 
@@ -200,7 +200,7 @@ for (idx,row) in df.iterrows():
     #     except:
     #         continue
     comp_dict={"name":row.loc["Name"],"country":row.loc["Country"],"links":links}
-    print(comp_dict)
+    # print(comp_dict)
     links_json.append(comp_dict)
 
 
